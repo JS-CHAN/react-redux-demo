@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {getChangeInputValueAction,getAddItemAction,getDeleteItemAction} from './store/actionCreator'
+import {getChangeInputValueAction, getAddItemAction, getDeleteItemAction, testSaga} from './store/actionCreator'
+import {TEST_SAGA} from "./store/actionTypes";
 
 const TodoList = (props) => {
-    const {inputValue, list, handlerChange, handlerClick, handleDelete} = props;
+    const {inputValue, list, handlerChange, handlerClick, handleDelete,testSaga} = props;
     return (
         <div>
             <div>
@@ -15,6 +16,9 @@ const TodoList = (props) => {
                     return <li onClick={handleDelete.bind(this, index)} key={index}>{item}</li>
                 })}
             </ul>
+            <div>
+                <button onClick={testSaga}>testSaga</button>
+            </div>
         </div>
     )
 };
@@ -37,6 +41,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleDelete (index) {
             const action = getDeleteItemAction(index)
+            dispatch(action)
+        },
+        testSaga () {
+            const action = testSaga()
             dispatch(action)
         }
     }
