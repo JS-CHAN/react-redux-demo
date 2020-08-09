@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {getChangeInputValueAction,getAddItemAction,getDeleteItemAction} from './store/actionCreator'
+import {getChangeInputValueAction,getAddItemAction,getDeleteItemAction, getInitDItems} from './store/actionCreator'
 
 const TodoList = (props) => {
-    const {inputValue, list, handlerChange, handlerClick, handleDelete} = props;
+    const {inputValue, list, handlerChange, handlerClick, handleDelete, testThunk} = props;
     return (
         <div>
             <div>
@@ -15,6 +15,9 @@ const TodoList = (props) => {
                     return <li onClick={handleDelete.bind(this, index)} key={index}>{item}</li>
                 })}
             </ul>
+            <div>
+                <button onClick={testThunk}>Test redux-thunk</button>
+            </div>
         </div>
     )
 };
@@ -37,6 +40,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         handleDelete (index) {
             const action = getDeleteItemAction(index)
+            dispatch(action)
+        },
+        testThunk(){
+            const action = getInitDItems();
             dispatch(action)
         }
     }
